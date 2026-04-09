@@ -1,0 +1,1455 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lumière Beauty Spa — Liệu Trình Da Chuẩn Y Khoa, Thấy Kết Quả Từ Buổi Đầu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --cream: #FFF9F5;
+  --cream2: #F3EDE8;
+  --gold: #D4A373;
+  --gold-light: #E8C99E;
+  --gold-dark: #B8865A;
+  --text: #2B2B2B;
+  --text-soft: #7A6E67;
+  --white: #FFFFFF;
+  --border: rgba(212,163,115,0.2);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; font-size: 16px; }
+
+body {
+  background: var(--cream);
+  color: var(--text);
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+  cursor: default;
+}
+
+/* ── CUSTOM CURSOR ── */
+.cursor {
+  position: fixed;
+  width: 8px; height: 8px;
+  background: var(--gold);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%,-50%);
+  transition: transform 0.1s, width 0.3s, height 0.3s, opacity 0.3s;
+  mix-blend-mode: multiply;
+}
+.cursor-ring {
+  position: fixed;
+  width: 36px; height: 36px;
+  border: 1px solid rgba(212,163,115,0.5);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%,-50%);
+  transition: transform 0.18s ease, width 0.3s, height 0.3s, opacity 0.3s;
+}
+
+/* ── STICKY NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 1000;
+  padding: 20px 48px;
+  display: flex; align-items: center; justify-content: space-between;
+  transition: background 0.4s, padding 0.4s, box-shadow 0.4s;
+}
+nav.scrolled {
+  background: rgba(255,249,245,0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  padding: 14px 48px;
+  box-shadow: 0 1px 24px rgba(212,163,115,0.12);
+}
+.nav-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  color: var(--text);
+  text-decoration: none;
+}
+.nav-logo em { color: var(--gold); font-style: italic; }
+.nav-links {
+  display: flex; gap: 36px; list-style: none;
+}
+.nav-links a {
+  font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--text-soft); text-decoration: none;
+  transition: color 0.3s;
+  font-weight: 400;
+}
+.nav-links a:hover { color: var(--gold); }
+.nav-cta {
+  background: var(--gold);
+  color: white;
+  border: none;
+  padding: 10px 24px;
+  font-family: 'Jost', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s;
+  border-radius: 1px;
+}
+.nav-cta:hover { background: var(--gold-dark); box-shadow: 0 8px 24px rgba(212,163,115,0.3); transform: translateY(-1px); }
+
+/* ── HAMBURGER MOBILE ── */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  background: none; border: none;
+  padding: 4px;
+}
+.hamburger span {
+  display: block; width: 24px; height: 1px;
+  background: var(--text);
+  transition: all 0.3s;
+}
+
+/* ── REVEAL ANIMATION ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.visible { opacity: 1; transform: none; }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* ── SECTION COMMON ── */
+section { position: relative; }
+.container { max-width: 1120px; margin: 0 auto; padding: 0 32px; }
+.section-label {
+  font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
+  color: var(--gold); font-weight: 400;
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 20px;
+}
+.section-label::before {
+  content: '';
+  display: block;
+  width: 32px; height: 1px;
+  background: var(--gold);
+}
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(36px, 5vw, 56px);
+  font-weight: 300;
+  line-height: 1.15;
+  letter-spacing: 0.5px;
+  color: var(--text);
+}
+.section-title em { font-style: italic; color: var(--gold); }
+
+/* ── HERO ── */
+#hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  background: var(--cream);
+  overflow: hidden;
+  padding-top: 90px;
+}
+.hero-left {
+  padding: 80px 48px 80px 80px;
+  position: relative;
+  z-index: 2;
+}
+.hero-tag {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 28px;
+  font-weight: 400;
+}
+.hero-tag::before {
+  content: '';
+  width: 28px; height: 1px;
+  background: var(--gold);
+}
+.hero-h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(48px, 5.5vw, 72px);
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: -0.5px;
+  color: var(--text);
+  margin-bottom: 28px;
+}
+.hero-h1 em { font-style: italic; color: var(--gold); display: block; }
+.hero-sub {
+  font-size: 15px; line-height: 1.9;
+  color: var(--text-soft); max-width: 420px;
+  margin-bottom: 20px;
+  font-weight: 300;
+}
+.hero-actions { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
+.btn-primary {
+  background: var(--gold);
+  color: white;
+  border: none;
+  padding: 16px 36px;
+  font-family: 'Jost', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
+  border-radius: 2px;
+  position: relative;
+  overflow: hidden;
+}
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.btn-primary:hover { background: var(--gold-dark); box-shadow: 0 12px 32px rgba(212,163,115,0.35); transform: translateY(-2px); }
+.btn-primary:hover::before { opacity: 1; }
+.btn-ghost {
+  background: none;
+  border: none;
+  font-family: 'Jost', sans-serif;
+  font-size: 12px;
+  color: var(--text-soft);
+  cursor: pointer;
+  display: flex; align-items: center; gap: 8px;
+  letter-spacing: 1px;
+  transition: color 0.3s;
+  padding: 0;
+}
+.btn-ghost:hover { color: var(--gold); }
+.btn-ghost svg { transition: transform 0.3s; }
+.btn-ghost:hover svg { transform: translateX(4px); }
+
+.hero-right {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
+.hero-img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  filter: brightness(0.92) saturate(0.9);
+}
+.hero-img-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to right, var(--cream) 0%, transparent 30%),
+              linear-gradient(to top, rgba(43,43,43,0.2) 0%, transparent 50%);
+}
+.hero-float-card {
+  position: absolute;
+  bottom: 48px; left: -40px;
+  background: white;
+  padding: 20px 24px;
+  box-shadow: 0 20px 60px rgba(43,43,43,0.15);
+  border-radius: 4px;
+  min-width: 200px;
+  animation: float 4s ease-in-out infinite;
+}
+@keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+.hero-float-card .num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 36px; font-weight: 300;
+  color: var(--gold); line-height: 1;
+}
+.hero-float-card .lbl {
+  font-size: 11px; letter-spacing: 1.5px;
+  color: var(--text-soft); margin-top: 4px;
+  text-transform: uppercase;
+}
+
+/* Hero proof points */
+.hero-proof {
+  display: flex; flex-direction: column; gap: 8px;
+  margin-bottom: 36px;
+}
+.proof-item {
+  font-size: 13px; color: var(--text-soft);
+  display: flex; align-items: center; gap: 8px;
+}
+.proof-check { color: var(--gold); font-weight: 600; }
+
+/* Decorative line */
+.hero-deco {
+  position: absolute;
+  top: 50%; left: 48px;
+  transform: translateY(-50%);
+  display: flex; flex-direction: column;
+  align-items: center; gap: 8px;
+}
+.hero-deco-line { width: 1px; height: 80px; background: var(--border); }
+.hero-deco-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--gold); }
+
+/* ── TRUST BAR ── */
+#trust {
+  background: var(--text);
+  padding: 28px 0;
+}
+.trust-inner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0;
+  flex-wrap: wrap;
+}
+.trust-item {
+  display: flex; align-items: center; gap: 16px;
+  padding: 12px 48px;
+  border-right: 1px solid rgba(255,255,255,0.1);
+  flex: 1; min-width: 200px; justify-content: center;
+}
+.trust-item:last-child { border-right: none; }
+.trust-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 36px; font-weight: 300;
+  color: var(--gold); line-height: 1;
+}
+.trust-text { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.55); font-weight: 300; }
+
+/* ── ABOUT ── */
+#about { padding: 120px 0; background: var(--cream); }
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+.about-imgs {
+  position: relative;
+  height: 560px;
+}
+.about-img-main {
+  position: absolute;
+  top: 0; left: 0;
+  width: 78%; height: 85%;
+  object-fit: cover;
+  border-radius: 2px;
+  box-shadow: 0 32px 64px rgba(43,43,43,0.12);
+}
+.about-img-side {
+  position: absolute;
+  bottom: 0; right: 0;
+  width: 52%; height: 52%;
+  object-fit: cover;
+  border-radius: 2px;
+  box-shadow: 0 24px 48px rgba(43,43,43,0.14);
+  border: 6px solid var(--cream);
+}
+.about-deco-frame {
+  position: absolute;
+  top: 32px; left: 32px;
+  width: calc(78% - 20px); height: calc(85% - 20px);
+  border: 1px solid var(--gold-light);
+  pointer-events: none;
+  z-index: 0;
+}
+.about-text { }
+.about-body { font-size: 15px; line-height: 2; color: var(--text-soft); margin: 28px 0 36px; font-weight: 300; }
+.about-features { display: flex; flex-direction: column; gap: 16px; }
+.about-feat {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+.about-feat:last-child { border-bottom: none; }
+.feat-icon {
+  width: 36px; height: 36px;
+  background: var(--cream2);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  font-size: 15px;
+}
+.feat-title { font-size: 13px; font-weight: 500; letter-spacing: 1px; color: var(--text); margin-bottom: 4px; }
+.feat-desc { font-size: 12px; color: var(--text-soft); line-height: 1.7; }
+
+/* ── SERVICES ── */
+#services { padding: 120px 0; background: var(--cream2); }
+.services-head { text-align: center; max-width: 560px; margin: 0 auto 72px; }
+.services-head .section-label { justify-content: center; }
+.services-head .section-label::before { display: none; }
+.services-head .section-label::after { content: ''; display: block; width: 32px; height: 1px; background: var(--gold); }
+.services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+.service-card {
+  background: var(--cream);
+  padding: 40px 32px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  transition: all 0.4s ease;
+  cursor: default;
+  position: relative;
+  overflow: hidden;
+}
+.service-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(212,163,115,0.05), transparent);
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.service-card:hover {
+  border-color: var(--border);
+  box-shadow: 0 24px 48px rgba(212,163,115,0.12);
+  transform: translateY(-6px);
+}
+.service-card:hover::before { opacity: 1; }
+.service-icon-wrap {
+  width: 56px; height: 56px;
+  border: 1px solid var(--gold-light);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 24px;
+  font-size: 22px;
+  transition: background 0.3s;
+}
+.service-card:hover .service-icon-wrap { background: rgba(212,163,115,0.1); }
+.service-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px; font-weight: 400;
+  color: var(--text); margin-bottom: 14px;
+  line-height: 1.3;
+}
+.service-desc { font-size: 13px; line-height: 1.9; color: var(--text-soft); margin-bottom: 24px; }
+.service-link {
+  font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--gold);
+  display: flex; align-items: center; gap: 8px;
+  background: none; border: none; cursor: pointer;
+  padding: 0; font-family: 'Jost', sans-serif; font-weight: 400;
+  transition: gap 0.3s;
+}
+.service-card:hover .service-link { gap: 14px; }
+
+/* ── RESULTS SECTION ── */
+#results { padding: 120px 0; background: var(--cream); overflow: hidden; }
+.results-head { margin-bottom: 48px; }
+.results-slider-wrap { position: relative; }
+.results-track {
+  display: flex; gap: 20px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  padding: 10px 0 20px;
+}
+.results-track::-webkit-scrollbar { display: none; }
+
+/* ── RESULTS NEW ── */
+.results-note { font-size: 12px; color: var(--text-soft); margin-top: 8px; font-style: italic; }
+.result-card {
+  flex-shrink: 0;
+  width: 300px;
+  scroll-snap-align: start;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--white);
+  box-shadow: 0 4px 24px rgba(43,43,43,0.09);
+  transition: transform 0.3s, box-shadow 0.3s;
+  border: 1px solid var(--border);
+}
+.result-card:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(43,43,43,0.13); }
+.result-split-wrap { position: relative; height: 220px; overflow: hidden; }
+.result-split-img { position: relative; width: 100%; height: 100%; }
+.result-split-img > img {
+  width: 100%; height: 100%; object-fit: cover;
+  object-position: top center;
+  filter: saturate(0.75) brightness(0.93);
+}
+.split-overlay {
+  position: absolute; inset: 0;
+  pointer-events: none;
+}
+.split-bar {
+  position: absolute; top: 0; bottom: 0;
+  left: 50%; width: 2px;
+  background: white;
+  box-shadow: 0 0 8px rgba(0,0,0,0.3);
+  z-index: 3;
+}
+.split-bar::after {
+  content: '↔';
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  background: white;
+  color: var(--gold);
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+.split-img-after {
+  position: absolute; inset: 0;
+  background-size: cover;
+  background-position: top center;
+  clip-path: inset(0 0 0 50%);
+  z-index: 2;
+  filter: saturate(1.05) brightness(1.05);
+}
+.split-tag {
+  position: absolute; top: 10px; z-index: 4;
+  font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+  background: rgba(0,0,0,0.55); color: white;
+  padding: 3px 8px; border-radius: 2px;
+  font-family: 'Jost', sans-serif;
+}
+.split-tag-before { left: 10px; }
+.split-tag-after { right: 10px; }
+.result-info { padding: 16px 18px 18px; }
+.result-badge {
+  display: inline-block;
+  font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--gold);
+  background: rgba(212,163,115,0.1);
+  border: 1px solid rgba(212,163,115,0.25);
+  padding: 3px 10px; border-radius: 2px;
+  margin-bottom: 8px;
+}
+.result-title { font-family: 'Cormorant Garamond', serif; font-size: 16px; font-weight: 500; color: var(--text); margin-bottom: 4px; }
+.result-sub { font-size: 12px; color: var(--text-soft); margin-bottom: 8px; }
+.result-stars { font-size: 13px; color: var(--gold); letter-spacing: 1px; }
+.slider-dots { display: flex; gap: 8px; justify-content: center; margin-top: 32px; }
+.dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold-light); cursor: pointer; transition: all 0.3s; border: none; }
+.dot.active { width: 24px; border-radius: 3px; background: var(--gold); }
+
+/* ── TESTIMONIALS ── */
+#testimonials { padding: 120px 0; background: var(--cream2); }
+.testimonials-head { text-align: center; max-width: 480px; margin: 0 auto 72px; }
+.testimonials-head .section-label { justify-content: center; }
+.testimonials-head .section-label::before { display: none; }
+.testimonials-head .section-label::after { content: ''; display: block; width: 32px; height: 1px; background: var(--gold); }
+.testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.testi-card {
+  background: var(--cream);
+  padding: 36px 32px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  transition: all 0.35s ease;
+  position: relative;
+}
+.testi-card::before {
+  content: '"';
+  position: absolute;
+  top: 24px; right: 28px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 80px; line-height: 1;
+  color: var(--cream2);
+  font-weight: 300;
+  pointer-events: none;
+}
+.testi-card:hover { border-color: var(--border); box-shadow: 0 16px 40px rgba(212,163,115,0.1); }
+.testi-stars { display: flex; gap: 3px; margin-bottom: 20px; }
+.star { color: var(--gold); font-size: 14px; }
+.testi-text { font-family: 'Cormorant Garamond', serif; font-size: 17px; line-height: 1.7; font-style: italic; color: var(--text); margin-bottom: 24px; font-weight: 400; }
+.testi-divider { width: 32px; height: 1px; background: var(--gold-light); margin-bottom: 16px; }
+.testi-name { font-size: 12px; font-weight: 500; letter-spacing: 1.5px; color: var(--text); text-transform: uppercase; margin-bottom: 4px; }
+.testi-role { font-size: 11px; color: var(--gold); }
+
+/* ── OFFER ── */
+#offer { padding: 80px 0 60px; background: var(--cream); }
+.offer-box {
+  background: var(--text);
+  border-radius: 8px;
+  padding: 60px 72px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 60px;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+.offer-box::before {
+  content: '';
+  position: absolute;
+  top: -80px; right: -80px;
+  width: 320px; height: 320px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212,163,115,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+.offer-badge {
+  display: inline-flex; align-items: center;
+  background: rgba(255,80,80,0.15);
+  border: 1px solid rgba(255,80,80,0.35);
+  color: #ff8080;
+  font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+  padding: 6px 14px; margin-bottom: 20px;
+  border-radius: 2px; font-weight: 500;
+}
+.offer-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 300; line-height: 1.15;
+  color: white; margin-bottom: 16px;
+}
+.offer-title em { color: var(--gold); font-style: italic; }
+.offer-sub { font-size: 14px; line-height: 1.8; color: rgba(255,255,255,0.6); max-width: 440px; margin-bottom: 20px; }
+.offer-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+.offer-pill {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.7);
+  font-size: 11px; letter-spacing: 0.5px;
+  padding: 5px 12px; border-radius: 20px;
+}
+.offer-cta { text-align: center; flex-shrink: 0; min-width: 200px; }
+.offer-discount {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 64px; font-weight: 300;
+  color: var(--gold); line-height: 1;
+}
+.offer-discount-label { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 20px; margin-top: 4px; }
+.offer-countdown { text-align: center; }
+.cd-label { font-size: 10px; letter-spacing: 1px; color: rgba(255,255,255,0.4); text-transform: uppercase; display: block; margin-bottom: 8px; }
+.cd-timer { display: flex; align-items: center; gap: 4px; justify-content: center; }
+.cd-unit { display: flex; flex-direction: column; align-items: center; }
+.cd-unit span { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 400; color: var(--gold); line-height: 1; }
+.cd-unit small { font-size: 9px; color: rgba(255,255,255,0.4); letter-spacing: 1px; text-transform: uppercase; margin-top: 2px; }
+.cd-sep { font-family: 'Cormorant Garamond', serif; font-size: 28px; color: var(--gold); opacity: 0.5; margin-bottom: 12px; }
+.btn-offer {
+  background: var(--gold);
+  color: white;
+  border: none;
+  padding: 16px 32px;
+  font-family: 'Jost', sans-serif;
+  font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s;
+  border-radius: 2px;
+  display: block; width: 100%;
+  margin-top: 20px;
+}
+.btn-offer:hover { background: var(--gold-dark); box-shadow: 0 12px 32px rgba(212,163,115,0.4); }
+.offer-note { font-size: 11px; color: rgba(255,255,255,0.3); margin-top: 10px; }
+
+/* ── BOOKING FORM ── */
+#booking { padding: 0 0 100px; background: var(--cream); }
+.booking-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 72px;
+  align-items: start;
+  padding: 60px 72px;
+  background: var(--cream2);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+.booking-desc { font-size: 14px; line-height: 1.8; color: var(--text-soft); margin: 16px 0 28px; }
+.booking-features { display: flex; flex-direction: column; gap: 12px; }
+.bk-feat { font-size: 13px; color: var(--text-soft); display: flex; gap: 10px; }
+.booking-form-wrap { }
+.booking-form { display: flex; flex-direction: column; gap: 20px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-label { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-soft); font-weight: 500; }
+.form-input {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 13px 16px;
+  font-family: 'Jost', sans-serif;
+  font-size: 14px;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  -webkit-appearance: none;
+}
+.form-input::placeholder { color: #c0b8b3; }
+.form-input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(212,163,115,0.1); }
+.service-select-grid, .time-select-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+.svc-chip { cursor: pointer; }
+.svc-chip input { display: none; }
+.svc-chip span {
+  display: block;
+  font-size: 12px; letter-spacing: 0.5px;
+  padding: 8px 14px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--white);
+  color: var(--text-soft);
+  transition: all 0.2s;
+  user-select: none;
+}
+.svc-chip input:checked + span {
+  background: rgba(212,163,115,0.12);
+  border-color: var(--gold);
+  color: var(--gold-dark);
+  font-weight: 500;
+}
+.svc-chip:hover span { border-color: var(--gold-light); }
+.btn-booking {
+  background: var(--gold);
+  color: white;
+  border: none;
+  padding: 17px 28px;
+  font-family: 'Jost', sans-serif;
+  font-size: 13px; letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s;
+  border-radius: 4px;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  width: 100%;
+  margin-top: 4px;
+}
+.btn-booking:hover { background: var(--gold-dark); box-shadow: 0 10px 28px rgba(212,163,115,0.35); transform: translateY(-1px); }
+.btn-booking:active { transform: scale(0.98); }
+.form-note { font-size: 11px; color: var(--text-soft); text-align: center; margin-top: -8px; }
+.booking-success {
+  text-align: center;
+  padding: 48px 24px;
+  animation: pulse-in 0.5s ease both;
+}
+.success-icon { font-size: 48px; margin-bottom: 16px; }
+.success-title { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 400; color: var(--text); margin-bottom: 12px; }
+.success-desc { font-size: 15px; line-height: 1.8; color: var(--text-soft); margin-bottom: 20px; }
+.success-info { font-size: 13px; color: var(--text-soft); }
+.success-info a { color: var(--gold); text-decoration: none; font-weight: 500; }
+
+/* ── FOOTER ── */
+footer {
+  background: #1E1B18;
+  padding: 72px 0 32px;
+  color: rgba(255,255,255,0.6);
+}
+.footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 60px; margin-bottom: 60px; }
+.footer-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px; font-weight: 400;
+  color: white; letter-spacing: 2px;
+  margin-bottom: 16px; display: block;
+}
+.footer-logo em { color: var(--gold); font-style: italic; }
+.footer-desc { font-size: 13px; line-height: 1.9; margin-bottom: 28px; max-width: 280px; }
+.footer-socials { display: flex; gap: 12px; }
+.social-btn {
+  width: 36px; height: 36px;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(255,255,255,0.5);
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-decoration: none;
+}
+.social-btn:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+.footer-col h4 {
+  font-family: 'Jost', sans-serif;
+  font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+  color: white; margin-bottom: 20px; font-weight: 500;
+}
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.footer-col a { font-size: 13px; color: rgba(255,255,255,0.5); text-decoration: none; transition: color 0.3s; }
+.footer-col a:hover { color: var(--gold); }
+.footer-contact-item { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 12px; }
+.footer-contact-item span { font-size: 13px; line-height: 1.7; }
+.footer-divider { border: none; border-top: 1px solid rgba(255,255,255,0.07); margin-bottom: 28px; }
+.footer-bottom { display: flex; justify-content: space-between; align-items: center; }
+.footer-copy { font-size: 12px; }
+.footer-hours { font-size: 12px; display: flex; align-items: center; gap: 8px; }
+.open-dot { width: 7px; height: 7px; border-radius: 50%; background: #4CAF50; animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+/* ── FLOATING ZALO/WA ── */
+.floating-btns {
+  position: fixed;
+  bottom: 32px; right: 28px;
+  display: flex; flex-direction: column; gap: 12px;
+  z-index: 999;
+}
+.fab {
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  font-size: 22px;
+  transition: all 0.3s;
+  text-decoration: none;
+}
+.fab:hover { transform: scale(1.1) translateY(-2px); box-shadow: 0 12px 32px rgba(0,0,0,0.25); }
+.fab-zalo { background: #0068FF; }
+.fab-wa { background: #25D366; }
+.fab-label {
+  position: absolute;
+  right: calc(100% + 10px);
+  background: rgba(43,43,43,0.85);
+  color: white;
+  font-size: 11px; letter-spacing: 1px;
+  padding: 5px 10px;
+  border-radius: 3px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s;
+}
+.fab:hover .fab-label { opacity: 1; }
+.fab { position: relative; }
+
+/* ── MOBILE ── */
+@media (max-width: 900px) {
+  nav { padding: 16px 24px; }
+  nav.scrolled { padding: 12px 24px; }
+  .nav-links, .nav-cta { display: none; }
+  .hamburger { display: flex; }
+
+  #hero { grid-template-columns: 1fr; min-height: auto; padding-top: 80px; }
+  .hero-left { padding: 60px 24px 40px; }
+  .hero-right { height: 60vw; max-height: 380px; }
+  .hero-float-card { left: 16px; bottom: 20px; }
+  .hero-deco { display: none; }
+
+  .about-grid { grid-template-columns: 1fr; gap: 40px; }
+  .about-imgs { height: 300px; }
+
+  .services-grid { grid-template-columns: 1fr; gap: 16px; }
+
+  .testimonials-grid { grid-template-columns: 1fr; gap: 16px; }
+
+  #results { padding: 80px 0; }
+  .result-card { width: 270px; }
+  .result-split-wrap { height: 190px; }
+  .offer-box { grid-template-columns: 1fr; padding: 40px 28px; gap: 32px; text-align: center; }
+  .offer-sub { max-width: 100%; }
+  .offer-pills { justify-content: center; flex-wrap: wrap; }
+  .booking-wrap { grid-template-columns: 1fr; padding: 36px 24px; gap: 36px; }
+  .form-row { grid-template-columns: 1fr; }
+  #offer { padding: 60px 0 40px; }
+  #booking { padding: 0 0 72px; }
+
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+
+  .container { padding: 0 20px; }
+
+  #trust { display: none; }
+  #about, #services, #results, #testimonials, #offer { padding: 80px 0; }
+  footer { padding: 56px 0 24px; }
+}
+
+@media (max-width: 540px) {
+  .footer-grid { grid-template-columns: 1fr; gap: 36px; }
+  .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+  .offer-box { padding: 32px 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- CUSTOM CURSOR -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+
+<!-- FLOATING BUTTONS -->
+<div class="floating-btns">
+  <a href="tel:0909000000" class="fab fab-zalo" aria-label="Zalo">
+    <span class="fab-label">Chat Zalo</span>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.5 13.5h-2.25l-1.5-2.25L11.25 15.5H9l2.625-3.75L9.375 8.5H11.5l1.25 2.25 1.25-2.25H16l-2.25 3.25L16.5 15.5z"/></svg>
+  </a>
+  <a href="https://wa.me/84909000000" class="fab fab-wa" aria-label="WhatsApp">
+    <span class="fab-label">WhatsApp</span>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+</div>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a href="#" class="nav-logo"><em>Lumière</em> Beauty Spa</a>
+  <ul class="nav-links">
+    <li><a href="#about">Về Chúng Tôi</a></li>
+    <li><a href="#services">Dịch Vụ</a></li>
+    <li><a href="#results">Kết Quả</a></li>
+    <li><a href="#testimonials">Đánh Giá</a></li>
+  </ul>
+  <button class="nav-cta" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Đặt Lịch</button>
+  <button class="hamburger" id="hamburger">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-left">
+    <div class="hero-tag reveal">✓ Chuẩn Y Khoa · 5,000+ Khách Hài Lòng</div>
+    <h1 class="hero-h1 reveal reveal-delay-1">
+      Liệu Trình Da<br>
+      <em>Thấy Kết Quả</em><br>
+      Từ Buổi Đầu
+    </h1>
+    <p class="hero-sub reveal reveal-delay-2">
+      Chuyên gia phân tích da miễn phí — đề xuất phác đồ cá nhân, cam kết da sáng khỏe rõ rệt sau 7 ngày hoặc điều trị lại không tính phí.
+    </p>
+    <div class="hero-proof reveal reveal-delay-2">
+      <div class="proof-item"><span class="proof-check">✓</span> Không đau · Không thời gian hồi phục</div>
+      <div class="proof-item"><span class="proof-check">✓</span> Tư vấn & soi da miễn phí trị giá 500k</div>
+      <div class="proof-item"><span class="proof-check">✓</span> Cam kết hoàn tiền nếu không hiệu quả</div>
+    </div>
+    <div class="hero-actions reveal reveal-delay-3">
+      <button class="btn-primary" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">🎁 Soi Da Miễn Phí — Đặt Ngay</button>
+      <button class="btn-ghost" onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'})">
+        Xem Dịch Vụ
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="#7A6E67" stroke-width="1.2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+    <div class="hero-deco">
+      <div class="hero-deco-dot"></div>
+      <div class="hero-deco-line"></div>
+      <div class="hero-deco-dot"></div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <img class="hero-img" src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=900&q=80&auto=format&fit=crop" alt="Lumière spa treatment">
+    <div class="hero-img-overlay"></div>
+    <div class="hero-float-card reveal reveal-delay-4">
+      <div class="num">5K+</div>
+      <div class="lbl">Khách hài lòng</div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<section id="trust">
+  <div class="trust-inner reveal">
+    <div class="trust-item">
+      <div>
+        <div class="trust-num">5,000+</div>
+        <div class="trust-text">Khách hàng hài lòng</div>
+      </div>
+    </div>
+    <div class="trust-item">
+      <div>
+        <div class="trust-num">10</div>
+        <div class="trust-text">Năm kinh nghiệm</div>
+      </div>
+    </div>
+    <div class="trust-item">
+      <div>
+        <div class="trust-num">98%</div>
+        <div class="trust-text">Khách quay lại</div>
+      </div>
+    </div>
+    <div class="trust-item">
+      <div>
+        <div class="trust-num">15+</div>
+        <div class="trust-text">Liệu trình chuyên biệt</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-imgs reveal">
+        <div class="about-deco-frame"></div>
+        <img class="about-img-main" src="https://images.unsplash.com/photo-1560750588-73207b1ef5b8?w=700&q=80&auto=format&fit=crop" alt="Spa interior">
+        <img class="about-img-side" src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=500&q=80&auto=format&fit=crop" alt="Spa treatment">
+      </div>
+      <div class="about-text">
+        <div class="section-label reveal">Về Chúng Tôi</div>
+        <h2 class="section-title reveal reveal-delay-1">Nơi Vẻ Đẹp Được<br>Chăm Sóc Bằng <em>Sự Tận Tâm</em></h2>
+        <p class="about-body reveal reveal-delay-2">
+          Lumière Beauty Spa ra đời với triết lý giản dị: mỗi người phụ nữ đều xứng đáng được chăm sóc bằng những gì tốt nhất. Chúng tôi kết hợp công nghệ thẩm mỹ tiên tiến với liệu pháp truyền thống để mang lại kết quả thực sự, bền vững.
+        </p>
+        <div class="about-features reveal reveal-delay-3">
+          <div class="about-feat">
+            <div class="feat-icon">🌿</div>
+            <div>
+              <div class="feat-title">Nguyên Liệu Thuần Tự Nhiên</div>
+              <div class="feat-desc">100% sản phẩm được chọn lọc từ thiên nhiên, không hóa chất độc hại.</div>
+            </div>
+          </div>
+          <div class="about-feat">
+            <div class="feat-icon">👩‍⚕️</div>
+            <div>
+              <div class="feat-title">Chuyên Gia Được Chứng Nhận</div>
+              <div class="feat-desc">Đội ngũ KTV được đào tạo quốc tế, kinh nghiệm 5–10 năm.</div>
+            </div>
+          </div>
+          <div class="about-feat">
+            <div class="feat-icon">✨</div>
+            <div>
+              <div class="feat-title">Phác Đồ Cá Nhân Hóa</div>
+              <div class="feat-desc">Mỗi liệu trình được thiết kế riêng dựa trên tình trạng da của bạn.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="container">
+    <div class="services-head">
+      <div class="section-label reveal">Dịch Vụ</div>
+      <h2 class="section-title reveal reveal-delay-1">Liệu Trình <em>Nổi Bật</em></h2>
+    </div>
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="service-icon-wrap">🌸</div>
+        <div class="service-name">Chăm Sóc Da Chuyên Sâu</div>
+        <div class="service-desc">Liệu trình làm sạch, cấp ẩm và nuôi dưỡng da từ sâu bên trong — phù hợp với mọi loại da, kể cả da nhạy cảm.</div>
+        <button class="service-link">Tìm Hiểu Thêm <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="#D4A373" stroke-width="1.2" stroke-linecap="round"/></svg></button>
+      </div>
+      <div class="service-card reveal reveal-delay-1">
+        <div class="service-icon-wrap">💫</div>
+        <div class="service-name">Trẻ Hóa Công Nghệ Cao</div>
+        <div class="service-desc">Ứng dụng công nghệ RF, laser thế hệ mới kích thích collagen, xóa mờ nếp nhăn và trả lại làn da căng mịn.</div>
+        <button class="service-link">Tìm Hiểu Thêm <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="#D4A373" stroke-width="1.2" stroke-linecap="round"/></svg></button>
+      </div>
+      <div class="service-card reveal reveal-delay-2">
+        <div class="service-icon-wrap">🕊️</div>
+        <div class="service-name">Massage Thư Giãn Toàn Diện</div>
+        <div class="service-desc">Kỹ thuật massage kết hợp tinh dầu thảo mộc cao cấp — giải phóng căng thẳng, phục hồi năng lượng từ đầu đến chân.</div>
+        <button class="service-link">Tìm Hiểu Thêm <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="#D4A373" stroke-width="1.2" stroke-linecap="round"/></svg></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section id="results">
+  <div class="container">
+    <div class="results-head">
+      <div class="section-label reveal">Trước &amp; Sau Điều Trị</div>
+      <h2 class="section-title reveal reveal-delay-1">Kết Quả Thực Tế<br>Từ <em>Khách Hàng</em></h2>
+      <p class="results-note reveal reveal-delay-2">Ảnh thật — không chỉnh sửa. Kết quả có thể khác nhau tùy cơ địa.</p>
+    </div>
+    <div class="results-slider-wrap reveal reveal-delay-2">
+      <div class="results-track" id="results-track">
+
+        <!-- Card 1 -->
+        <div class="result-card">
+          <div class="result-split-wrap">
+            <div class="result-split-img">
+              <img src="https://images.unsplash.com/photo-1588072432836-e10032774350?w=680&q=85&auto=format&fit=crop&crop=faces" alt="Trước điều trị nám">
+              <div class="split-overlay">
+                <div class="split-bar"></div>
+                <span class="split-tag split-tag-before">TRƯỚC</span>
+                <span class="split-tag split-tag-after">SAU</span>
+                <div class="split-img-after" style="background-image:url('https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=680&q=85&auto=format&fit=crop&crop=faces')"></div>
+              </div>
+            </div>
+          </div>
+          <div class="result-info">
+            <div class="result-badge">Nám · Thâm Sạm</div>
+            <div class="result-title">Chị Minh Thư, 34 tuổi</div>
+            <div class="result-sub">4 buổi IPL · Da sáng đều, nám mờ 80%</div>
+            <div class="result-stars">★★★★★</div>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="result-card">
+          <div class="result-split-wrap">
+            <div class="result-split-img">
+              <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=680&q=85&auto=format&fit=crop&crop=faces" alt="Trước điều trị mụn">
+              <div class="split-overlay">
+                <div class="split-bar"></div>
+                <span class="split-tag split-tag-before">TRƯỚC</span>
+                <span class="split-tag split-tag-after">SAU</span>
+                <div class="split-img-after" style="background-image:url('https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=680&q=85&auto=format&fit=crop&crop=faces')"></div>
+              </div>
+            </div>
+          </div>
+          <div class="result-info">
+            <div class="result-badge">Mụn · Sẹo Rỗ</div>
+            <div class="result-title">Chị Khánh Linh, 28 tuổi</div>
+            <div class="result-sub">8 buổi LED + Peel · Mụn giảm 85%</div>
+            <div class="result-stars">★★★★★</div>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="result-card">
+          <div class="result-split-wrap">
+            <div class="result-split-img">
+              <img src="https://images.unsplash.com/photo-1499557354967-2b2d8910bcca?w=680&q=85&auto=format&fit=crop&crop=faces" alt="Trước trẻ hóa">
+              <div class="split-overlay">
+                <div class="split-bar"></div>
+                <span class="split-tag split-tag-before">TRƯỚC</span>
+                <span class="split-tag split-tag-after">SAU</span>
+                <div class="split-img-after" style="background-image:url('https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=680&q=85&auto=format&fit=crop&crop=faces')"></div>
+              </div>
+            </div>
+          </div>
+          <div class="result-info">
+            <div class="result-badge">Trẻ Hóa · Căng Da</div>
+            <div class="result-title">Chị Phương Anh, 42 tuổi</div>
+            <div class="result-sub">6 buổi RF Microneedling · Da căng, trẻ hơn 5 tuổi</div>
+            <div class="result-stars">★★★★★</div>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="result-card">
+          <div class="result-split-wrap">
+            <div class="result-split-img">
+              <img src="https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?w=680&q=85&auto=format&fit=crop&crop=faces" alt="Trước cấp ẩm">
+              <div class="split-overlay">
+                <div class="split-bar"></div>
+                <span class="split-tag split-tag-before">TRƯỚC</span>
+                <span class="split-tag split-tag-after">SAU</span>
+                <div class="split-img-after" style="background-image:url('https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=680&q=85&auto=format&fit=crop&crop=faces')"></div>
+              </div>
+            </div>
+          </div>
+          <div class="result-info">
+            <div class="result-badge">Da Khô · Sạm Tối</div>
+            <div class="result-title">Chị Hà Vy, 31 tuổi</div>
+            <div class="result-sub">3 buổi Hydra Boost · Da căng ẩm, sáng rõ</div>
+            <div class="result-stars">★★★★★</div>
+          </div>
+        </div>
+
+      </div>
+      <div class="slider-dots" id="slider-dots">
+        <button class="dot active" onclick="scrollToCard(0)"></button>
+        <button class="dot" onclick="scrollToCard(1)"></button>
+        <button class="dot" onclick="scrollToCard(2)"></button>
+        <button class="dot" onclick="scrollToCard(3)"></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="container">
+    <div class="testimonials-head">
+      <div class="section-label reveal">Khách Hàng Nói Gì</div>
+      <h2 class="section-title reveal reveal-delay-1">Cảm Nhận <em>Thật</em><br>Từ Chị Em</h2>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testi-card reveal">
+        <div class="testi-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+        <div class="testi-text">"Da mình cải thiện rõ chỉ sau 2 buổi — nám mờ hẳn, da sáng lên trông thấy. Chưa bao giờ mình thấy tự tin với làn da như vậy."</div>
+        <div class="testi-divider"></div>
+        <div class="testi-name">Nguyễn Minh Thư</div>
+        <div class="testi-role">Liệu trình IPL · 4 buổi</div>
+      </div>
+      <div class="testi-card reveal reveal-delay-1">
+        <div class="testi-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+        <div class="testi-text">"Không gian sang trọng, chuyên viên tư vấn rất tận tình. Mình đã thử nhiều spa nhưng Lumière là nơi khiến mình cảm thấy thật sự được chăm sóc."</div>
+        <div class="testi-divider"></div>
+        <div class="testi-name">Trần Khánh Linh</div>
+        <div class="testi-role">Massage toàn thân · 6 buổi</div>
+      </div>
+      <div class="testi-card reveal reveal-delay-2">
+        <div class="testi-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+        <div class="testi-text">"Mình bị da mụn lâu năm, thử đủ cách. Đến đây chỉ sau 8 buổi, mụn giảm 80%, sẹo mờ đi rõ rệt. Cảm ơn đội ngũ Lumière rất nhiều!"</div>
+        <div class="testi-divider"></div>
+        <div class="testi-name">Lê Phương Anh</div>
+        <div class="testi-role">Điều trị mụn · 8 buổi</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OFFER / CTA + BOOKING FORM -->
+<section id="offer">
+  <div class="container">
+    <div class="offer-box reveal">
+      <div>
+        <div class="offer-badge">🔥 Chỉ Còn 12 Suất Tuần Này</div>
+        <h2 class="offer-title">Miễn Phí Soi Da &<br>Tư Vấn Trị Giá <em>500K</em></h2>
+        <p class="offer-sub">Đặt lịch hôm nay — nhận thêm <strong style="color:var(--gold)">giảm 20% liệu trình đầu tiên</strong>. Chuyên gia sẽ phân tích tình trạng da và lên phác đồ riêng cho bạn.</p>
+        <div class="offer-pills">
+          <span class="offer-pill">✓ Không ràng buộc</span>
+          <span class="offer-pill">✓ Cam kết kết quả</span>
+          <span class="offer-pill">✓ Hoàn tiền nếu không hiệu quả</span>
+        </div>
+      </div>
+      <div class="offer-cta">
+        <div class="offer-discount">500K</div>
+        <div class="offer-discount-label">Miễn phí hoàn toàn hôm nay</div>
+        <div class="offer-countdown" id="countdown">
+          <span class="cd-label">Ưu đãi kết thúc sau:</span>
+          <div class="cd-timer">
+            <div class="cd-unit"><span id="cd-h">11</span><small>giờ</small></div>
+            <div class="cd-sep">:</div>
+            <div class="cd-unit"><span id="cd-m">47</span><small>phút</small></div>
+            <div class="cd-unit"><span id="cd-s">22</span><small>giây</small></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING FORM -->
+<section id="booking">
+  <div class="container">
+    <div class="booking-wrap reveal">
+      <div class="booking-left">
+        <div class="section-label">Đặt Lịch Ngay</div>
+        <h2 class="section-title">Nhận Tư Vấn<br><em>Hoàn Toàn Miễn Phí</em></h2>
+        <p class="booking-desc">Điền thông tin — chúng tôi sẽ liên hệ trong vòng <strong>15 phút</strong> để xác nhận lịch hẹn.</p>
+        <div class="booking-features">
+          <div class="bk-feat"><span>📍</span> 123 Nguyễn Huệ, Q.1 — Hoặc tư vấn online</div>
+          <div class="bk-feat"><span>⏰</span> Mở cửa 9:00 – 20:00, kể cả cuối tuần</div>
+          <div class="bk-feat"><span>📞</span> Hotline: 0909 000 000</div>
+        </div>
+      </div>
+      <div class="booking-form-wrap">
+        <div class="booking-form" id="booking-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Họ & Tên *</label>
+              <input type="text" class="form-input" id="f-name" placeholder="Nguyễn Thị A" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Số Điện Thoại *</label>
+              <input type="tel" class="form-input" id="f-phone" placeholder="0909 000 000" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Dịch Vụ Quan Tâm</label>
+            <div class="service-select-grid">
+              <label class="svc-chip"><input type="radio" name="service" value="cham-soc-da" checked><span>Chăm Sóc Da</span></label>
+              <label class="svc-chip"><input type="radio" name="service" value="tre-hoa"><span>Trẻ Hóa Da</span></label>
+              <label class="svc-chip"><input type="radio" name="service" value="dieu-tri-mun"><span>Điều Trị Mụn</span></label>
+              <label class="svc-chip"><input type="radio" name="service" value="massage"><span>Massage</span></label>
+              <label class="svc-chip"><input type="radio" name="service" value="tu-van"><span>Chưa Biết — Cần Tư Vấn</span></label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Thời Gian Thuận Tiện</label>
+            <div class="time-select-grid">
+              <label class="svc-chip"><input type="radio" name="time" value="sang" checked><span>Sáng (9-12h)</span></label>
+              <label class="svc-chip"><input type="radio" name="time" value="chieu"><span>Chiều (13-17h)</span></label>
+              <label class="svc-chip"><input type="radio" name="time" value="toi"><span>Tối (17-20h)</span></label>
+            </div>
+          </div>
+          <button class="btn-booking" onclick="submitForm()">
+            Đặt Lịch Ngay — Miễn Phí Hoàn Toàn
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+          <p class="form-note">🔒 Thông tin của bạn được bảo mật tuyệt đối. Không spam.</p>
+        </div>
+        <div class="booking-success" id="booking-success" style="display:none">
+          <div class="success-icon">✅</div>
+          <h3 class="success-title">Đặt Lịch Thành Công!</h3>
+          <p class="success-desc">Chúng tôi sẽ gọi xác nhận trong <strong>15 phút</strong>.<br>Hẹn gặp bạn tại Lumière!</p>
+          <div class="success-info">📞 Nếu cần gấp: <a href="tel:0909000000">0909 000 000</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a href="#" class="footer-logo"><em>Lumière</em> Beauty Spa</a>
+        <p class="footer-desc">Nơi vẻ đẹp được chăm sóc bằng sự tận tâm — kết hợp công nghệ tiên tiến và liệu pháp truyền thống.</p>
+        <div class="footer-socials">
+          <a href="#" class="social-btn" aria-label="Facebook">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+          </a>
+          <a href="#" class="social-btn" aria-label="Instagram">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="#" class="social-btn" aria-label="TikTok">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.34-6.34V9.01a8.16 8.16 0 004.77 1.52V7.1a4.85 4.85 0 01-1.01-.41z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Dịch Vụ</h4>
+        <ul>
+          <li><a href="#">Chăm Sóc Da</a></li>
+          <li><a href="#">Trẻ Hóa Da</a></li>
+          <li><a href="#">Massage Thư Giãn</a></li>
+          <li><a href="#">Điều Trị Mụn</a></li>
+          <li><a href="#">Gói Cô Dâu</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Khám Phá</h4>
+        <ul>
+          <li><a href="#">Về Chúng Tôi</a></li>
+          <li><a href="#">Blog Làm Đẹp</a></li>
+          <li><a href="#">Kết Quả Thực Tế</a></li>
+          <li><a href="#">Ưu Đãi</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Liên Hệ</h4>
+        <div class="footer-contact-item">
+          <span>📍</span>
+          <span>123 Nguyễn Huệ, Quận 1, TP. HCM</span>
+        </div>
+        <div class="footer-contact-item">
+          <span>📞</span>
+          <span>0909 000 000</span>
+        </div>
+        <div class="footer-contact-item">
+          <span>🕐</span>
+          <span>T2–CN: 9:00 – 20:00</span>
+        </div>
+      </div>
+    </div>
+    <hr class="footer-divider">
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2025 Lumière Beauty Spa. All rights reserved.</div>
+      <div class="footer-hours">
+        <div class="open-dot"></div>
+        Đang mở cửa · Đến 20:00 hôm nay
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── CURSOR ──
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursor-ring');
+let mx=0, my=0, rx=0, ry=0;
+document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; cursor.style.left=mx+'px'; cursor.style.top=my+'px'; });
+(function animRing(){
+  rx+=(mx-rx)*0.12; ry+=(my-ry)*0.12;
+  ring.style.left=rx+'px'; ring.style.top=ry+'px';
+  requestAnimationFrame(animRing);
+})();
+document.querySelectorAll('button,a,.service-card,.testi-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{ cursor.style.width='14px'; cursor.style.height='14px'; ring.style.width='52px'; ring.style.height='52px'; });
+  el.addEventListener('mouseleave',()=>{ cursor.style.width='8px'; cursor.style.height='8px'; ring.style.width='36px'; ring.style.height='36px'; });
+});
+
+// ── NAV SCROLL ──
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', ()=>{
+  navbar.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// ── REVEAL ON SCROLL ──
+const reveals = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.12 });
+reveals.forEach(r=>io.observe(r));
+
+// ── SLIDER DOTS ──
+const track = document.getElementById('results-track');
+const dots = document.querySelectorAll('.dot');
+function scrollToCard(i){
+  const cards = track.querySelectorAll('.result-card');
+  if(cards[i]) { cards[i].scrollIntoView({behavior:'smooth',block:'nearest',inline:'start'}); }
+  dots.forEach((d,j)=>d.classList.toggle('active',j===i));
+}
+track.addEventListener('scroll', ()=>{
+  const cards = track.querySelectorAll('.result-card');
+  let closest=0, minDist=Infinity;
+  cards.forEach((c,i)=>{
+    const d = Math.abs(c.getBoundingClientRect().left - track.getBoundingClientRect().left);
+    if(d<minDist){minDist=d;closest=i;}
+  });
+  dots.forEach((d,j)=>d.classList.toggle('active',j===closest));
+});
+
+// ── MOBILE MENU ──
+const hamburger = document.getElementById('hamburger');
+let menuOpen = false;
+hamburger.addEventListener('click',()=>{
+  menuOpen = !menuOpen;
+  // simple toggle — could expand to a full overlay if needed
+  const spans = hamburger.querySelectorAll('span');
+  if(menuOpen){
+    spans[0].style.transform='translateY(6px) rotate(45deg)';
+    spans[1].style.opacity='0';
+    spans[2].style.transform='translateY(-6px) rotate(-45deg)';
+  } else {
+    spans.forEach(s=>{ s.style.transform=''; s.style.opacity=''; });
+  }
+});
+
+// ── COUNTDOWN TIMER ──
+let endTime = Date.now() + (11*3600 + 47*60 + 22) * 1000;
+function updateCountdown(){
+  const diff = Math.max(0, endTime - Date.now());
+  const h = Math.floor(diff/3600000);
+  const m = Math.floor((diff%3600000)/60000);
+  const s = Math.floor((diff%60000)/1000);
+  const pad = n => String(n).padStart(2,'0');
+  const cdH = document.getElementById('cd-h');
+  const cdM = document.getElementById('cd-m');
+  const cdS = document.getElementById('cd-s');
+  if(cdH) cdH.textContent = pad(h);
+  if(cdM) cdM.textContent = pad(m);
+  if(cdS) cdS.textContent = pad(s);
+}
+setInterval(updateCountdown, 1000);
+updateCountdown();
+
+// ── FORM SUBMIT ──
+function submitForm(){
+  const name = document.getElementById('f-name').value.trim();
+  const phone = document.getElementById('f-phone').value.trim();
+  if(!name || !phone){
+    const inputs = [document.getElementById('f-name'), document.getElementById('f-phone')];
+    inputs.forEach(i=>{ if(!i.value.trim()) i.style.borderColor='#ff8080'; });
+    return;
+  }
+  document.getElementById('booking-form').style.display = 'none';
+  document.getElementById('booking-success').style.display = 'block';
+  if(navigator.vibrate) navigator.vibrate([50,30,80]);
+}
+// Reset border on input
+document.querySelectorAll('.form-input').forEach(i=>{
+  i.addEventListener('input', ()=>{ i.style.borderColor=''; });
+});
+
+function animateCounter(el, target, suffix=''){
+  let current = 0;
+  const step = target / 50;
+  const timer = setInterval(()=>{
+    current = Math.min(current+step, target);
+    el.textContent = Math.round(current).toLocaleString() + suffix;
+    if(current>=target) clearInterval(timer);
+  }, 30);
+}
+const trustIo = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      document.querySelectorAll('.trust-num').forEach(el=>{
+        const text = el.textContent;
+        if(text.includes('5,000')) animateCounter(el, 5000, '+');
+        else if(text.includes('10')) animateCounter(el, 10);
+        else if(text.includes('98')) animateCounter(el, 98, '%');
+        else if(text.includes('15')) animateCounter(el, 15, '+');
+      });
+      trustIo.disconnect();
+    }
+  });
+}, { threshold: 0.5 });
+const trustSec = document.getElementById('trust');
+if(trustSec) trustIo.observe(trustSec);
+</script>
+</body>
+</html>
